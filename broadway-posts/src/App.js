@@ -1,32 +1,35 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 // https://jsonplaceholder.typicode.com/posts
 
 function App() {
 
   const [users, setUsers] = useState([]);
-  const[showUsers, setShowUsers] = useState(2)
+  const [showUsers, setShowUsers] = useState(4);
+  const[hideInfo, setHideInfo] = useState(false);
+  const[currentIndex, setCurrentIndex] = useState();
+  console.log('currently closing text of', currentIndex)
 
   axios.get('https://jsonplaceholder.typicode.com/users')
-  .then(function (response) {
-    // console.log(response.data);
-    setUsers(response.data)
-    console.log(response.data)
-  })
+    .then(function (response) {
+      setUsers(response.data)
+      // console.log(response.data)
+    })
 
-  // .catch(function (error) {
-  //   console.log(error);
-  // })
-  // .finally(function () {
-  //   // always executed
-  // });
+    const hideDetails = (index) =>{
+      console.log('hide me')
+      setHideInfo(false)
+      console.log(index)
+      setCurrentIndex(index)
 
+      
+    }
   return (
     <div className="App">
-     {/* {articles.slice(0,showPosts).map((item) => (
+      {/* {articles.slice(0,showPosts).map((item) => (
       <div className='post py-5'>
         <h3 className='text-3xl font-bold mb-3 text-cyan-400'>{item.title}</h3>
         <p>{item.body}</p>
@@ -44,23 +47,34 @@ function App() {
       </div>
      ))} */}
 
-   
 
-     <hr/>
-     <ul role="list" class="p-6 divide-y divide-slate-200">
-     {users.slice(0,showUsers).map((person)=> (
-    <li class="flex py-4 first:pt-0 last:pb-0">
-      <img class="h-10 w-10 rounded-full" src="{person.imageUrl}" alt="" />
-      <div class="ml-3 overflow-hidden">
-        <p class="text-sm font-medium text-slate-900">{person.name} - {person.address.city}</p>
-        <p class="text-sm text-slate-500 truncate">{person.email} - {person.company.name}</p>
-      </div>
-    </li>
-     ))}
-       <button className='bg-blue-800 px-10 py-4 text-white rounded hover:bg-blue-900 hover:drop-shadow-lg' onClick={()=> setShowUsers(showUsers+2)}>
-      Load More
-     </button>
-</ul>
+
+      <hr />
+      <ul role="list" className="p-6 divide-y divide-slate-200">
+        {users.slice(0, showUsers).map((person, index) => (
+          
+          <li className="flex py-4 first:pt-0 last:pb-0" key={person.id}>
+            {/* <span>{{index}}</span> */}
+            <img className="h-10 w-10 rounded-full" src="{person.imageUrl}" alt="" />
+            <div className="ml-3 overflow-hidden">
+              <p className="text-sm font-medium text-slate-900">{person.name} - {person.address.city}</p>
+              <p className="text-sm text-slate-500 truncate">{person.email} - {person.company.name}</p>
+
+              <button onClick={(index)=> setHideInfo(index, true)}>Read More</button>
+              {hideInfo &&
+              <div className="info">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit exercitationem aut rerum adipisci voluptatibus sunt. Eaque assumenda voluptas quos a, nihil ipsum facere voluptate dicta temporibus culpa eius veritatis aut?
+              </div>
+              }
+              <button onClick={()=> hideDetails(index)}>Hide Details</button>
+
+            </div>
+          </li>
+        ))}
+        <button className='bg-blue-800 px-10 py-4 text-white rounded hover:bg-blue-900 hover:drop-shadow-lg' onClick={() => setShowUsers(showUsers + 2)}>
+          Load More
+        </button>
+      </ul>
     </div>
   );
 }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery</title>
+    <style>
+        .popup-wrapper{
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+            background-color: rgba(0,0,0,0.3);
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-wrapper #aboutJquery{
+            max-width: 400px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        .header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <h1>Welcome to Jquery</h1>
+    <div class="popup-wrapper" id="myPopUp">
+
+
+        <div id="aboutJquery">
+            <div class="header">
+                <h3 class="title">About Jquery</h3>
+                <button class="close">Close</button>
+            </div>
+            <div class="body">
+                jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers. With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
+            </div>
+        </div>
+    </div>
+    <button id="myBtn">Click me to show more details about jquery</button>
+
+
+    <ol class="testMenuItem">
+        <li>Link 1</li>
+        <li>Link 2</li>
+        <li>Link 3</li>
+        <li>Link 4</li>
+        <li>Link 5</li>
+    </ol>
+    <button class="addNewItem">add new item</button>
+
+    <script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"></script>
+
+  <script src="./app.js"></script>
+  <script>
+
+
+$(document).ready(function(){
+    $('#myPopUp').hide();
+    $('#myBtn').click(function(){
+    $('#myPopUp').show();
+    })
+    $('.close').click(function(){
+        $(this).parent().parent().parent().hide();
+    })
+    $('.addNewItem').click(function(){
+        $('.testMenuItem li:last-child').remove();
+    })
+});
+
+
+  </script>
+
+</body>
+</html>
